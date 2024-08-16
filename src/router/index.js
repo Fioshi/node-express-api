@@ -42,4 +42,37 @@ router.get('/admin', (req, res)=> {
     return res.send('acesso liberado').status(200);
 })
 
+router.post('/submit', (req,res)=>{
+    const {nome, email} = req.body;
+
+    if(!nome || !email){
+        return res.status(400).send('Favor fornecer nome e email validos');
+    }
+    res.status(201).send('Dado criado com sucesso');
+})
+
+let items = [
+    {
+        id: 1 , nome: "panela"
+    },
+    {
+        id: 2 , nome: "frigideira"
+    },
+    {
+        id: 3 , nome: "lapis"
+    },
+]
+
+router.get("/items/:id", (req,res)=>{
+    const id = parseInt(req.params.id);
+
+    const item = items.find((item) => item.id == id);
+
+    if(item){
+        return res.status(200).send(item);
+    } else {
+        return res.status(404).send('Não encontrado');
+    }
+})
+
 module.exports = router; 
